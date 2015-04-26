@@ -1,6 +1,7 @@
 package id.zelory.tanipedia.api;
 
 import id.zelory.tanipedia.model.Cuaca;
+import id.zelory.tanipedia.util.StringUtils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -51,11 +52,12 @@ public class CuacaAPI extends HttpServlet
 			Cuaca cuaca = new Cuaca();
 			cuaca.setLokasi(lokasi);
 			Date tanggal = new Date(item.findValue("dt").asLong() * 1000);
-			cuaca.setTanggal(tanggal.toString().substring(0, 10));
+			cuaca.setTanggal(StringUtils.ubahTanggal(tanggal.toString()
+					.substring(0, 10)));
 			cuaca.setSuhuMin(item.findValue("temp").findValue("min").asText());
 			cuaca.setSuhuMax(item.findValue("temp").findValue("max").asText());
-			cuaca.setCuaca(item.findValue("weather").get(0).findValue("main")
-					.asText());
+			cuaca.setCuaca(StringUtils.ubahCuaca(item.findValue("weather")
+					.get(0).findValue("main").asText()));
 			cuaca.setDetail(item.findValue("weather").get(0)
 					.findValue("description").asText());
 

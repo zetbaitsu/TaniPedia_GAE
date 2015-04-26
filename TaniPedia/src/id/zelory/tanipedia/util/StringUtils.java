@@ -40,4 +40,62 @@ public class StringUtils
 		System.out.println(i);
 		return string.substring(i);
 	}
+
+	public static String ubahTanggal(String tanggal)
+	{
+		return ubahHari(tanggal.substring(0, 3)) + ", " + tanggal.substring(8) + " "+ tanggal.substring(4, 7) + " 2015";
+	}
+
+	public static String ubahHari(String hari)
+	{
+		String hasil;
+		switch (hari)
+		{
+			case "Mon":
+				hasil = "Senin";
+				break;
+			case "Tue":
+				hasil = "Selasa";
+				break;
+			case "Wed":
+				hasil = "Rabu";
+				break;
+			case "Thu":
+				hasil = "Kamis";
+				break;
+			case "Fri":
+				hasil = "Jumat";
+				break;
+			case "Sat":
+				hasil = "Sabtu";
+				break;
+			case "Sun":
+				hasil = "Minggu";
+				break;
+			default:
+				hasil = "Senin";
+				break;
+		}
+		
+		return hasil;
+	}
+	
+	public static String ubahCuaca(String cuaca)
+	{
+		String hasil;
+		
+		switch (cuaca)
+		{
+			case "Rain":
+				hasil = "Hujan";
+				break;
+			case "Clear":
+				hasil = "Cerah";
+				break;
+			default:
+				hasil = cuaca;
+				break;
+		}
+		return hasil;
+	}
 }
