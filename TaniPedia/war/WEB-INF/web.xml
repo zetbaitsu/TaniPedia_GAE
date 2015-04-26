@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<servlet>
+		<servlet-name>Cuaca</servlet-name>
+		<servlet-class>id.zelory.tanipedia.api.CuacaAPI</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Cuaca</servlet-name>
+		<url-pattern>/cuaca</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Berita</servlet-name>
+		<servlet-class>id.zelory.tanipedia.api.BeritaAPI</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Berita</servlet-name>
+		<url-pattern>/berita</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>BeritaCron</servlet-name>
+		<servlet-class>id.zelory.tanipedia.cron.BeritaCron</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BeritaCron</servlet-name>
+		<url-pattern>/berita-cron</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>BeritaFullCron</servlet-name>
+		<servlet-class>id.zelory.tanipedia.cron.BeritaFullCron</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>BeritaFullCron</servlet-name>
+		<url-pattern>/berita-full-cron</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+</web-app>

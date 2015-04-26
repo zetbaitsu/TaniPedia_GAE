@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cronentries>
+  <cron>
+    <url>/berita-cron</url>
+    <description>Scraping berita setiap 6 jam</description>
+    <schedule>every 6 hours</schedule>
+  </cron>
+  <cron>
+    <url>/berita-full-cron</url>
+    <description>Scraping isi berita setiap 10 menit</description>
+    <schedule>every 10 minutes</schedule>
+  </cron>
+</cronentries>
