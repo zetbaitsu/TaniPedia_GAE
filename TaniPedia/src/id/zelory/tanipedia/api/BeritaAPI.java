@@ -30,7 +30,6 @@ public class BeritaAPI extends HttpServlet
 		{
 			JSON = mapper.writeValueAsString(DBHelper.ambilBerita(url, true));
 		}
-
 		resp.getWriter().println(JSON);
 	}
 }

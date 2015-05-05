@@ -21,6 +21,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/berita</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>Komoditas</servlet-name>
+		<servlet-class>id.zelory.tanipedia.api.KomoditasAPI</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Komoditas</servlet-name>
+		<url-pattern>/komoditas</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>BeritaCron</servlet-name>
 		<servlet-class>id.zelory.tanipedia.cron.BeritaCron</servlet-class>
 	</servlet>

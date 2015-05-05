@@ -6,6 +6,18 @@ import java.util.Date;
 
 public class StringUtils
 {
+	private static final String cerah[] = { "Waktu yang tepat untuk memupuk.",
+			"Tidak ada salahnya untuk panen hari ini.",
+			"Membersihkan ladang nampaknya bisa dilakukan." };
+	private static final String berawan[] = {
+			"Tidak ada salahnya untuk menanam benih yang baru saja kamu beli.",
+			"Apakah ladangmu sudah dibersihkan hari ini?",
+			"Kamu bisa kepasar untuk membeli beberapa benih atau pupuk hari ini." };
+	private static final String hujan[] = {
+			"Nampaknya bukan hari yang tepat untuk memanen hari ini.",
+			"Mungkin besok adalah hari yang lebih baik untuk memanen.",
+			"Istirahat sejenak tidak ada salahnya kok." };
+
 	public static Date resolveDate(String tanggal)
 	{
 		SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy");
@@ -34,7 +46,7 @@ public class StringUtils
 		for (i = 0; i < string.length(); i++)
 		{
 			System.out.println(string.charAt(i));
-			if (string.charAt(i) != ' ')
+			if (string.charAt(i) != ' ')
 				break;
 		}
 		System.out.println(i);
@@ -43,7 +55,8 @@ public class StringUtils
 
 	public static String ubahTanggal(String tanggal)
 	{
-		return ubahHari(tanggal.substring(0, 3)) + ", " + tanggal.substring(8) + " "+ tanggal.substring(4, 7) + " 2015";
+		return ubahHari(tanggal.substring(0, 3)) + ", " + tanggal.substring(8)
+				+ " " + tanggal.substring(4, 7) + " 2015";
 	}
 
 	public static String ubahHari(String hari)
@@ -76,14 +89,13 @@ public class StringUtils
 				hasil = "Senin";
 				break;
 		}
-		
+
 		return hasil;
 	}
-	
+
 	public static String ubahCuaca(String cuaca)
 	{
 		String hasil;
-		
 		switch (cuaca)
 		{
 			case "Rain":
@@ -92,10 +104,37 @@ public class StringUtils
 			case "Clear":
 				hasil = "Cerah";
 				break;
+			case "Clouds":
+				hasil = "Berawan";
+				System.out.println(cuaca);
+				break;
 			default:
 				hasil = cuaca;
 				break;
 		}
 		return hasil;
+	}
+
+	public static String randKegiatan(String cuaca)
+	{
+		String kegiatan = null;
+
+		switch (cuaca)
+		{
+			case "Hujan":
+				kegiatan = hujan[Utils.randInt(0, 2)];
+				break;
+			case "Cerah":
+				kegiatan = cerah[Utils.randInt(0, 2)];
+				break;
+			case "Berawan":
+				kegiatan = berawan[Utils.randInt(0, 2)];
+				break;
+			default:
+				kegiatan = "Tidak ada.";
+				break;
+		}
+
+		return kegiatan;
 	}
 }

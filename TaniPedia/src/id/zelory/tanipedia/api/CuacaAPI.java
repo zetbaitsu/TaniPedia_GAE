@@ -56,10 +56,8 @@ public class CuacaAPI extends HttpServlet
 					.substring(0, 10)));
 			cuaca.setSuhuMin(item.findValue("temp").findValue("min").asText());
 			cuaca.setSuhuMax(item.findValue("temp").findValue("max").asText());
-			cuaca.setCuaca(StringUtils.ubahCuaca(item.findValue("weather")
-					.get(0).findValue("main").asText()));
-			cuaca.setDetail(item.findValue("weather").get(0)
-					.findValue("description").asText());
+			cuaca.setCuaca(item.findValue("weather").get(0).findValue("main")
+					.asText());
 
 			cuacas.add(cuaca);
 		}

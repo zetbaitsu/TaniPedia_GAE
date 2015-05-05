@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ThreadFactory;
 
 import id.zelory.tanipedia.model.Berita;
+import id.zelory.tanipedia.model.Komoditas;
 
 public class Scraper
 {
@@ -137,5 +138,221 @@ public class Scraper
 		tmp.outputSettings().charset("ASCII");
 
 		return tmp.toString();
+	}
+
+	public static ArrayList<Komoditas> ambilKomoditas()
+	{
+		ArrayList<Komoditas> komoditas = new ArrayList<Komoditas>();
+		Thread threads[] = new Thread[4];
+		ThreadFactory factory = ThreadManager.currentRequestThreadFactory();
+		final ArrayList<ArrayList<Komoditas>> tmp = new ArrayList<ArrayList<Komoditas>>();
+
+		for (int i = 0; i < 4; i++)
+		{
+			final int x = i;
+			threads[i] = factory.newThread(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					switch (x)
+					{
+						case 0:
+							tmp.add(ambilKomoditasBeras());
+							break;
+						case 1:
+							tmp.add(ambilKomoditasPalawija());
+							break;
+						case 2:
+							tmp.add(ambilKomoditasSayuran());
+							break;
+						case 3:
+							tmp.add(ambilKomoditasBuah());
+							break;
+						default:
+							break;
+					}
+				}
+			});
+			threads[i].start();
+		}
+
+		while (threads[0].isAlive() || threads[1].isAlive()
+				|| threads[2].isAlive() || threads[3].isAlive())
+			;
+		
+		for (int i=0;i<4;i++)
+		{
+			komoditas.addAll(tmp.get(i));
+		}
+
+		return komoditas;
+	}
+
+	public static ArrayList<Komoditas> ambilKomoditasBeras()
+	{
+		ArrayList<Komoditas> komoditas = new ArrayList<Komoditas>();
+		Document document = null;
+
+		while (document == null)
+		{
+			try
+			{
+				document = Jsoup
+						.connect(Komoditas.API)
+						.data("laporan", Komoditas.POST_BERAS)
+						.data("tanggal",
+								Utils.getYesterdayDateString().substring(0, 1))
+						.data("bulan",
+								Utils.getYesterdayDateString().substring(2, 3))
+						.data("tahun",
+								Utils.getYesterdayDateString().substring(4))
+						.data("pilihlaporan", "View+Laporan")
+						.userAgent(USER_AGENT).post();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+		Elements elements = document.select("th");
+		for (int i = 1; i <= 4; i++)
+		{
+			Komoditas komoditi = new Komoditas();
+			komoditi.setNama(elements.get(i).text());
+			komoditas.add(komoditi);
+		}
+		elements = document.select("td");
+		for (int i = 0; i < 4; i++)
+		{
+			komoditas.get(i).setHarga(elements.get(i + 3).text());
+		}
+		return komoditas;
+	}
+
+	public static ArrayList<Komoditas> ambilKomoditasPalawija()
+	{
+		ArrayList<Komoditas> komoditas = new ArrayList<Komoditas>();
+		Document document = null;
+
+		while (document == null)
+		{
+			try
+			{
+				document = Jsoup
+						.connect(Komoditas.API)
+						.data("laporan", Komoditas.POST_PALAWIJA)
+						.data("tanggal",
+								Utils.getYesterdayDateString().substring(0, 1))
+						.data("bulan",
+								Utils.getYesterdayDateString().substring(2, 3))
+						.data("tahun",
+								Utils.getYesterdayDateString().substring(4))
+						.data("pilihlaporan", "View+Laporan")
+						.userAgent(USER_AGENT).post();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+		Elements elements = document.select("th");
+		for (int i = 1; i <= 10; i++)
+		{
+			Komoditas komoditi = new Komoditas();
+			komoditi.setNama(elements.get(i).text());
+			komoditas.add(komoditi);
+		}
+		elements = document.select("td");
+		for (int i = 0; i < 10; i++)
+		{
+			komoditas.get(i).setHarga(elements.get(i + 3).text());
+		}
+
+		return komoditas;
+	}
+
+	public static ArrayList<Komoditas> ambilKomoditasSayuran()
+	{
+		ArrayList<Komoditas> komoditas = new ArrayList<Komoditas>();
+		Document document = null;
+
+		while (document == null)
+		{
+			try
+			{
+				document = Jsoup
+						.connect(Komoditas.API)
+						.data("laporan", Komoditas.POST_SAYURAN)
+						.data("tanggal",
+								Utils.getYesterdayDateString().substring(0, 1))
+						.data("bulan",
+								Utils.getYesterdayDateString().substring(2, 3))
+						.data("tahun",
+								Utils.getYesterdayDateString().substring(4))
+						.data("pilihlaporan", "View+Laporan")
+						.userAgent(USER_AGENT).post();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+		Elements elements = document.select("th");
+		for (int i = 1; i <= 9; i++)
+		{
+			Komoditas komoditi = new Komoditas();
+			komoditi.setNama(elements.get(i).text());
+			komoditas.add(komoditi);
+		}
+		elements = document.select("td");
+		for (int i = 0; i < 9; i++)
+		{
+			komoditas.get(i).setHarga(elements.get(i + 3).text());
+		}
+
+		return komoditas;
+	}
+
+	public static ArrayList<Komoditas> ambilKomoditasBuah()
+	{
+		ArrayList<Komoditas> komoditas = new ArrayList<Komoditas>();
+		Document document = null;
+
+		while (document == null)
+		{
+			try
+			{
+				document = Jsoup
+						.connect(Komoditas.API)
+						.data("laporan", Komoditas.POST_BUAH)
+						.data("tanggal",
+								Utils.getYesterdayDateString().substring(0, 1))
+						.data("bulan",
+								Utils.getYesterdayDateString().substring(2, 3))
+						.data("tahun",
+								Utils.getYesterdayDateString().substring(4))
+						.data("pilihlaporan", "View+Laporan")
+						.userAgent(USER_AGENT).post();
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+			}
+		}
+
+		Elements elements = document.select("th");
+		for (int i = 1; i <= 12; i++)
+		{
+			Komoditas komoditi = new Komoditas();
+			komoditi.setNama(elements.get(i).text());
+			komoditas.add(komoditi);
+		}
+		elements = document.select("td");
+		for (int i = 0; i < 12; i++)
+		{
+			komoditas.get(i).setHarga(elements.get(i + 3).text());
+		}
+
+		return komoditas;
 	}
 }
