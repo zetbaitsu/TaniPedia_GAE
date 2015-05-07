@@ -1,4 +1,11 @@
-<!-- Indices written at Wed, 6 May 2015 03:57:38 WIB -->
+<!-- Indices written at Thu, 7 May 2015 12:44:35 WIB -->
 
-<datastore-indexes/>
+<datastore-indexes>
 
+    <!-- Used 4 times in query history -->
+    <datastore-index kind="Jawaban" ancestor="false" source="auto">
+        <property name="idSoal" direction="asc"/>
+        <property name="tanggal" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>

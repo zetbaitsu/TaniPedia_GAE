@@ -26,7 +26,6 @@ public class Scraper
 		ArrayList<Berita> beritaArrayList = new ArrayList<>();
 		Thread threads[] = new Thread[jumlahHalaman];
 		ThreadFactory factory = ThreadManager.currentRequestThreadFactory();
-
 		final Document documents[] = new Document[jumlahHalaman];
 
 		for (int i = 0; i < jumlahHalaman; i++)

@@ -44,6 +44,54 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<servlet-name>BeritaFullCron</servlet-name>
 		<url-pattern>/berita-full-cron</url-pattern>
 	</servlet-mapping>
+	<servlet>
+		<servlet-name>Register</servlet-name>
+		<servlet-class>id.zelory.tanipedia.api.Register</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Register</servlet-name>
+		<url-pattern>/register</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>Login</servlet-name>
+		<servlet-class>id.zelory.tanipedia.api.Login</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>Login</servlet-name>
+		<url-pattern>/login</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>AmbilSoal</servlet-name>
+		<servlet-class>id.zelory.tanipedia.api.TanyaTaniAPI$AmbilSoal</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AmbilSoal</servlet-name>
+		<url-pattern>/tanya/ambil-soal</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>KirimSoal</servlet-name>
+		<servlet-class>id.zelory.tanipedia.api.TanyaTaniAPI$KirimSoal</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>KirimSoal</servlet-name>
+		<url-pattern>/tanya/kirim-soal</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>AmbilJawaban</servlet-name>
+		<servlet-class>id.zelory.tanipedia.api.TanyaTaniAPI$AmbilJawaban</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AmbilJawaban</servlet-name>
+		<url-pattern>/tanya/ambil-jawaban</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>KirimJawaban</servlet-name>
+		<servlet-class>id.zelory.tanipedia.api.TanyaTaniAPI$KirimJawaban</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>KirimJawaban</servlet-name>
+		<url-pattern>/tanya/kirim-jawaban</url-pattern>
+	</servlet-mapping>
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>

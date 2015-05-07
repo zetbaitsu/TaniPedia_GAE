@@ -1,14 +1,20 @@
 package id.zelory.tanipedia.util;
 
 import id.zelory.tanipedia.model.Berita;
+import id.zelory.tanipedia.model.Jawaban;
+import id.zelory.tanipedia.model.PakTani;
+import id.zelory.tanipedia.model.Soal;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
+import com.google.appengine.api.datastore.Key;
+import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.Filter;
@@ -45,6 +51,52 @@ public class DBHelper
 		}
 
 		datastore.put(item);
+	}
+
+	public static boolean simpan(PakTani pakTani)
+	{
+		Entity item = new Entity("PakTani", pakTani.getEmail());
+		item.setProperty("email", pakTani.getEmail());
+		item.setProperty("nama", pakTani.getNama());
+		item.setProperty("password", pakTani.getPassword());
+
+		Key key = datastore.put(item);
+		if (key.equals(item.getKey()))
+			return true;
+		else
+			return false;
+	}
+
+	public static boolean simpan(Soal soal)
+	{
+		Entity item = new Entity("Soal", soal.getId());
+		item.setProperty("id", soal.getId());
+		item.setProperty("email", soal.getEmail());
+		item.setProperty("tanggal", soal.getTanggal());
+		item.setProperty("isi", soal.getIsi());
+
+		Key key = datastore.put(item);
+		if (key.equals(item.getKey()))
+			return true;
+		else
+			return false;
+	}
+
+	public static boolean simpan(Jawaban jawaban)
+	{
+		Key id = KeyFactory.createKey("Jawaban", jawaban.getIdSoal().toString()
+				+ jawaban.getTanggal().toString());
+		Entity item = new Entity("Jawaban", id);
+		item.setProperty("idSoal", jawaban.getIdSoal());
+		item.setProperty("email", jawaban.getEmail());
+		item.setProperty("tanggal", jawaban.getTanggal());
+		item.setProperty("isi", jawaban.getIsi());
+
+		Key key = datastore.put(item);
+		if (key.equals(item.getKey()))
+			return true;
+		else
+			return false;
 	}
 
 	public static ArrayList<Berita> ambilBerita(int jumlah, boolean isi)
@@ -160,5 +212,76 @@ public class DBHelper
 		}
 
 		return arrayListBerita;
+	}
+
+	public static PakTani ambilPakTani(String email)
+	{
+		Query query = new Query("PakTani");
+		Filter filter = new Query.FilterPredicate("email",
+				FilterOperator.EQUAL, email);
+		query.setFilter(filter);
+		PreparedQuery pq = datastore.prepare(query);
+		Entity item = pq.asSingleEntity();
+
+		PakTani pakTani = new PakTani();
+
+		try
+		{
+			pakTani.setEmail(item.getProperty("email").toString());
+			pakTani.setNama(item.getProperty("nama").toString());
+			pakTani.setPassword(item.getProperty("password").toString());
+		} catch (Exception e)
+		{
+
+		}
+
+		return pakTani;
+	}
+
+	public static ArrayList<Soal> ambilSoal(int jumlah)
+	{
+		ArrayList<Soal> soal = new ArrayList<Soal>();
+		Query query = new Query("Soal").addSort("tanggal",
+				Query.SortDirection.DESCENDING);
+		List<Entity> items = datastore.prepare(query).asList(
+				FetchOptions.Builder.withLimit(jumlah));
+
+		for (Entity item : items)
+		{
+			Soal s = new Soal();
+			s.setId((Key) item.getProperty("id"));
+			s.setEmail(item.getProperty("email").toString());
+			s.setTanggal((Date) item.getProperty("tanggal"));
+			s.setIsi(item.getProperty("isi").toString());
+
+			soal.add(s);
+		}
+
+		return soal;
+	}
+
+	public static ArrayList<Jawaban> ambilJawaban(Key idSoal)
+	{
+		ArrayList<Jawaban> jawaban = new ArrayList<Jawaban>();
+		Query query = new Query("Jawaban").addSort("tanggal",
+				Query.SortDirection.ASCENDING);
+		Filter filter = new Query.FilterPredicate("idSoal",
+				FilterOperator.EQUAL, idSoal);
+		query.setFilter(filter);
+		List<Entity> items = datastore.prepare(query).asList(
+				FetchOptions.Builder.withDefaults());
+
+		for (Entity item : items)
+		{
+			Jawaban j = new Jawaban();
+			j.setIdSoal((Key) item.getProperty("idSoal"));
+			j.setEmail(item.getProperty("email").toString());
+			j.setTanggal((Date) item.getProperty("tanggal"));
+			j.setIsi(item.getProperty("isi").toString());
+
+			jawaban.add(j);
+		}
+
+		return jawaban;
 	}
 }
