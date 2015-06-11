@@ -1,11 +1,15 @@
 package id.zelory.tanipedia.api;
 
 import id.zelory.tanipedia.model.Jawaban;
+import id.zelory.tanipedia.model.JawabanTampil;
 import id.zelory.tanipedia.model.Soal;
+import id.zelory.tanipedia.model.SoalTampil;
 import id.zelory.tanipedia.util.DBHelper;
+import id.zelory.tanipedia.util.StringUtils;
 import id.zelory.tanipedia.util.Utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.ServletException;
@@ -28,12 +32,26 @@ public class TanyaTaniAPI
 		{
 			resp.setContentType("application/json; charset=utf-8");
 			ObjectMapper mapper = new ObjectMapper();
-			String JSON = mapper.writeValueAsString(DBHelper.ambilSoal(30));
+			ArrayList<Soal> soal = DBHelper.ambilSoal(30);
+			ArrayList<SoalTampil> soalList = new ArrayList<SoalTampil>();
+
+			for (Soal s : soal)
+			{
+				SoalTampil st = new SoalTampil();
+				st.setId(s.getId().getName());
+				st.setNama(DBHelper.ambilPakTani(s.getEmail()).getNama());
+				st.setIsi(s.getIsi());
+				st.setTanggal(StringUtils.ubahTanggal(s.getTanggal().toString()
+						.substring(0, 10)));
+				soalList.add(st);
+			}
+
+			String JSON = mapper.writeValueAsString(soalList);
 
 			resp.getWriter().println(JSON);
 		}
 	}
-	
+
 	@SuppressWarnings("serial")
 	public static class KirimSoal extends HttpServlet
 	{
@@ -44,21 +62,21 @@ public class TanyaTaniAPI
 			resp.setContentType("application/json; charset=utf-8");
 			String email = req.getParameter("email");
 			String isi = req.getParameter("isi");
-			Date now  = Utils.getTodayDate();
-			Key id = KeyFactory.createKey("Soal",email + now.toString());
-			
+			Date now = Utils.getTodayDate();
+			Key id = KeyFactory.createKey("Soal", email + now.toString());
+
 			Soal soal = new Soal();
 			soal.setEmail(email);
 			soal.setIsi(isi);
 			soal.setId(id);
 			soal.setTanggal(now);
-			
+
 			DBHelper.simpan(soal);
-			
+
 			resp.getWriter().println("{\"status\": \"Berhasil\"}");
 		}
 	}
-	
+
 	@SuppressWarnings("serial")
 	public static class AmbilJawaban extends HttpServlet
 	{
@@ -69,13 +87,27 @@ public class TanyaTaniAPI
 			resp.setContentType("application/json; charset=utf-8");
 			ObjectMapper mapper = new ObjectMapper();
 			String idSoal = req.getParameter("idSoal");
-			Key id = KeyFactory.createKey("Soal",idSoal);
-			String JSON = mapper.writeValueAsString(DBHelper.ambilJawaban(id));
+			Key id = KeyFactory.createKey("Soal", idSoal);
+			ArrayList<Jawaban> jawaban = DBHelper.ambilJawaban(id);
+			ArrayList<JawabanTampil> jawabanList = new ArrayList<JawabanTampil>();
+
+			for (Jawaban j : jawaban)
+			{
+				JawabanTampil jt = new JawabanTampil();
+				jt.setIdSoal(j.getIdSoal().getName());
+				jt.setNama(DBHelper.ambilPakTani(j.getEmail()).getNama());
+				jt.setIsi(j.getIsi());
+				jt.setTanggal(StringUtils.ubahTanggal(j.getTanggal().toString()
+						.substring(0, 10)));
+				jawabanList.add(jt);
+			}
 			
+			String JSON = mapper.writeValueAsString(jawabanList);
+
 			resp.getWriter().println(JSON);
 		}
 	}
-	
+
 	@SuppressWarnings("serial")
 	public static class KirimJawaban extends HttpServlet
 	{
@@ -85,19 +117,19 @@ public class TanyaTaniAPI
 		{
 			resp.setContentType("application/json; charset=utf-8");
 			String idSoal = req.getParameter("idSoal");
-			Key id = KeyFactory.createKey("Soal",idSoal);
+			Key id = KeyFactory.createKey("Soal", idSoal);
 			String email = req.getParameter("email");
 			String isi = req.getParameter("isi");
-			Date now  = Utils.getTodayDate();
-			
+			Date now = Utils.getTodayDate();
+
 			Jawaban jawaban = new Jawaban();
 			jawaban.setIdSoal(id);
 			jawaban.setEmail(email);
 			jawaban.setTanggal(now);
 			jawaban.setIsi(isi);
-			
+
 			DBHelper.simpan(jawaban);
-			
+
 			resp.getWriter().println("{\"status\": \"Berhasil\"}");
 		}
 	}

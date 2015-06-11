@@ -9,6 +9,7 @@ public class Cuaca
 	private String lokasi;
 	private String suhuMax;
 	private String suhuMin;
+	private String suhu;
 	private String tanggal;
 	private String cuaca;
 	private String kegiatan;
@@ -43,6 +44,16 @@ public class Cuaca
 		this.suhuMin = suhuMin;
 	}
 
+	public String getSuhu()
+	{
+		return suhu;
+	}
+
+	public void setSuhu(String suhu)
+	{
+		this.suhu = suhu;
+	}
+	
 	public String getTanggal()
 	{
 		return tanggal;
