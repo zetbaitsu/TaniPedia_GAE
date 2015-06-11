@@ -1,18 +1,18 @@
 package id.zelory.tanipedia.util;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
-import org.jsoup.nodes.Entities;
-
-import com.google.appengine.api.ThreadManager;
+import id.zelory.tanipedia.model.Berita;
+import id.zelory.tanipedia.model.Komoditas;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadFactory;
 
-import id.zelory.tanipedia.model.Berita;
-import id.zelory.tanipedia.model.Komoditas;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Entities;
+import org.jsoup.select.Elements;
+
+import com.google.appengine.api.ThreadManager;
 
 public class Scraper
 {
@@ -179,10 +179,16 @@ public class Scraper
 		while (threads[0].isAlive() || threads[1].isAlive()
 				|| threads[2].isAlive() || threads[3].isAlive())
 			;
-		
-		for (int i=0;i<4;i++)
+
+		for (int i = 0; i < 4; i++)
 		{
-			komoditas.addAll(tmp.get(i));
+			try
+			{
+				komoditas.addAll(tmp.get(i));
+			} catch (Exception e)
+			{
+
+			}
 		}
 
 		return komoditas;
@@ -192,20 +198,15 @@ public class Scraper
 	{
 		ArrayList<Komoditas> komoditas = new ArrayList<Komoditas>();
 		Document document = null;
-
+		String param[] = Utils.getYesterdayDateString().split(" ");
 		while (document == null)
 		{
 			try
 			{
-				document = Jsoup
-						.connect(Komoditas.API)
+				document = Jsoup.connect(Komoditas.API)
 						.data("laporan", Komoditas.POST_BERAS)
-						.data("tanggal",
-								Utils.getYesterdayDateString().substring(0, 1))
-						.data("bulan",
-								Utils.getYesterdayDateString().substring(2, 3))
-						.data("tahun",
-								Utils.getYesterdayDateString().substring(4))
+						.data("tanggal", param[0]).data("bulan", param[1])
+						.data("tahun", param[2])
 						.data("pilihlaporan", "View+Laporan")
 						.userAgent(USER_AGENT).post();
 			} catch (IOException e)
@@ -233,20 +234,15 @@ public class Scraper
 	{
 		ArrayList<Komoditas> komoditas = new ArrayList<Komoditas>();
 		Document document = null;
-
+		String param[] = Utils.getYesterdayDateString().split(" ");
 		while (document == null)
 		{
 			try
 			{
-				document = Jsoup
-						.connect(Komoditas.API)
+				document = Jsoup.connect(Komoditas.API)
 						.data("laporan", Komoditas.POST_PALAWIJA)
-						.data("tanggal",
-								Utils.getYesterdayDateString().substring(0, 1))
-						.data("bulan",
-								Utils.getYesterdayDateString().substring(2, 3))
-						.data("tahun",
-								Utils.getYesterdayDateString().substring(4))
+						.data("tanggal", param[0]).data("bulan", param[1])
+						.data("tahun", param[2])
 						.data("pilihlaporan", "View+Laporan")
 						.userAgent(USER_AGENT).post();
 			} catch (IOException e)
@@ -275,20 +271,15 @@ public class Scraper
 	{
 		ArrayList<Komoditas> komoditas = new ArrayList<Komoditas>();
 		Document document = null;
-
+		String param[] = Utils.getYesterdayDateString().split(" ");
 		while (document == null)
 		{
 			try
 			{
-				document = Jsoup
-						.connect(Komoditas.API)
+				document = Jsoup.connect(Komoditas.API)
 						.data("laporan", Komoditas.POST_SAYURAN)
-						.data("tanggal",
-								Utils.getYesterdayDateString().substring(0, 1))
-						.data("bulan",
-								Utils.getYesterdayDateString().substring(2, 3))
-						.data("tahun",
-								Utils.getYesterdayDateString().substring(4))
+						.data("tanggal", param[0]).data("bulan", param[1])
+						.data("tahun", param[2])
 						.data("pilihlaporan", "View+Laporan")
 						.userAgent(USER_AGENT).post();
 			} catch (IOException e)
@@ -317,20 +308,15 @@ public class Scraper
 	{
 		ArrayList<Komoditas> komoditas = new ArrayList<Komoditas>();
 		Document document = null;
-
+		String param[] = Utils.getYesterdayDateString().split(" ");
 		while (document == null)
 		{
 			try
 			{
-				document = Jsoup
-						.connect(Komoditas.API)
+				document = Jsoup.connect(Komoditas.API)
 						.data("laporan", Komoditas.POST_BUAH)
-						.data("tanggal",
-								Utils.getYesterdayDateString().substring(0, 1))
-						.data("bulan",
-								Utils.getYesterdayDateString().substring(2, 3))
-						.data("tahun",
-								Utils.getYesterdayDateString().substring(4))
+						.data("tanggal", param[0]).data("bulan", param[1])
+						.data("tahun", param[2])
 						.data("pilihlaporan", "View+Laporan")
 						.userAgent(USER_AGENT).post();
 			} catch (IOException e)
