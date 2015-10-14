@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
 @SuppressWarnings("serial")
 public class CuacaAPI extends HttpServlet
@@ -37,7 +38,6 @@ public class CuacaAPI extends HttpServlet
 			lon = "110.36";
 		}
 
-		System.out.println(Cuaca.API + "&lat=" + lat + "&lon=" + lon);
 		ObjectMapper mapper = new ObjectMapper();
 		JsonNode root = mapper.readTree(new URL(Cuaca.API + "&lat=" + lat
 				+ "&lon=" + lon));
@@ -62,7 +62,7 @@ public class CuacaAPI extends HttpServlet
 
 			cuacas.add(cuaca);
 		}
-
+		mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
 		String JSON = mapper.writeValueAsString(cuacas);
 		resp.getWriter().println(JSON);
 	}

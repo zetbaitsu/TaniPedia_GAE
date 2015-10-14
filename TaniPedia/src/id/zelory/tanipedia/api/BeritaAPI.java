@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
 @SuppressWarnings("serial")
 public class BeritaAPI extends HttpServlet
@@ -21,6 +22,7 @@ public class BeritaAPI extends HttpServlet
 		resp.setContentType("application/json; charset=utf-8");
 		String url = req.getParameter("url");
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
 		String JSON;
 
 		if (url == null)

@@ -11,12 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
 @SuppressWarnings("serial")
 public class Login extends HttpServlet
 {
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException
 	{
 		resp.setContentType("application/json; charset=utf-8");
@@ -24,7 +25,9 @@ public class Login extends HttpServlet
 		String email = req.getParameter("email");
 		String password = req.getParameter("pass");
 		ObjectMapper mapper = new ObjectMapper();
-		String JSON = mapper.writeValueAsString(DBHelper.ambilPakTani(email));
+		mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+		String JSON;
+		
 		if (DBHelper.ambilPakTani(email).getPassword() == null
 				|| !DBHelper.ambilPakTani(email).getPassword().equals(password))
 		{

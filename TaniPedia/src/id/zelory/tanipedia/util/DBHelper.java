@@ -2,6 +2,7 @@ package id.zelory.tanipedia.util;
 
 import id.zelory.tanipedia.model.Berita;
 import id.zelory.tanipedia.model.Jawaban;
+import id.zelory.tanipedia.model.Komoditas;
 import id.zelory.tanipedia.model.PakTani;
 import id.zelory.tanipedia.model.Soal;
 
@@ -65,6 +66,14 @@ public class DBHelper
 			return true;
 		else
 			return false;
+	}
+	
+	public static void simpan(Komoditas komoditas)
+	{
+		Entity item = new Entity("Komoditas", komoditas.getNama());
+		item.setProperty("nama", komoditas.getNama());
+		item.setProperty("harga", komoditas.getHarga());
+		datastore.put(item);
 	}
 
 	public static boolean simpan(Soal soal)
@@ -283,5 +292,22 @@ public class DBHelper
 		}
 
 		return jawaban;
+	}
+	
+	public static ArrayList<Komoditas> ambilKomoditas()
+	{
+		ArrayList<Komoditas> komoditas = new ArrayList<Komoditas>();
+		Query query = new Query("Komoditas");
+		List<Entity> items = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+
+		for (Entity item : items)
+		{
+			Komoditas k = new Komoditas();
+			k.setNama(item.getProperty("nama").toString());
+			k.setHarga(item.getProperty("harga").toString());
+			komoditas.add(k);
+		}
+
+		return komoditas;
 	}
 }

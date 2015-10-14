@@ -45,6 +45,14 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 		<url-pattern>/berita-full-cron</url-pattern>
 	</servlet-mapping>
 	<servlet>
+		<servlet-name>KomoditasCron</servlet-name>
+		<servlet-class>id.zelory.tanipedia.cron.KomoditasCron</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>KomoditasCron</servlet-name>
+		<url-pattern>/komoditas-cron</url-pattern>
+	</servlet-mapping>
+	<servlet>
 		<servlet-name>Register</servlet-name>
 		<servlet-class>id.zelory.tanipedia.api.Register</servlet-class>
 	</servlet>

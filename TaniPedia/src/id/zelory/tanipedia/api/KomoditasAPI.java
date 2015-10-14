@@ -1,6 +1,6 @@
 package id.zelory.tanipedia.api;
 
-import id.zelory.tanipedia.util.Scraper;
+import id.zelory.tanipedia.util.DBHelper;
 
 import java.io.IOException;
 
@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 
 @SuppressWarnings("serial")
 public class KomoditasAPI extends HttpServlet
@@ -20,7 +21,9 @@ public class KomoditasAPI extends HttpServlet
 	{
 		resp.setContentType("application/json; charset=utf-8");
 		ObjectMapper mapper = new ObjectMapper();
-		String JSON = mapper.writeValueAsString(Scraper.ambilKomoditas());
+		mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
+		
+		String JSON = mapper.writeValueAsString(DBHelper.ambilKomoditas());
 
 		resp.getWriter().println(JSON);
 	}

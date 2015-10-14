@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 
@@ -32,6 +33,7 @@ public class TanyaTaniAPI
 		{
 			resp.setContentType("application/json; charset=utf-8");
 			ObjectMapper mapper = new ObjectMapper();
+			mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
 			ArrayList<Soal> soal = DBHelper.ambilSoal(30);
 			ArrayList<SoalTampil> soalList = new ArrayList<SoalTampil>();
 
@@ -56,7 +58,7 @@ public class TanyaTaniAPI
 	public static class KirimSoal extends HttpServlet
 	{
 		@Override
-		protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+		protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 				throws ServletException, IOException
 		{
 			resp.setContentType("application/json; charset=utf-8");
@@ -86,11 +88,12 @@ public class TanyaTaniAPI
 		{
 			resp.setContentType("application/json; charset=utf-8");
 			ObjectMapper mapper = new ObjectMapper();
+			mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
 			String idSoal = req.getParameter("idSoal");
 			Key id = KeyFactory.createKey("Soal", idSoal);
 			ArrayList<Jawaban> jawaban = DBHelper.ambilJawaban(id);
 			ArrayList<JawabanTampil> jawabanList = new ArrayList<JawabanTampil>();
-
+			System.out.println(idSoal);
 			for (Jawaban j : jawaban)
 			{
 				JawabanTampil jt = new JawabanTampil();
@@ -112,7 +115,7 @@ public class TanyaTaniAPI
 	public static class KirimJawaban extends HttpServlet
 	{
 		@Override
-		protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+		protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 				throws ServletException, IOException
 		{
 			resp.setContentType("application/json; charset=utf-8");

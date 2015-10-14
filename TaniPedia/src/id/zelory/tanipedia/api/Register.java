@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Register extends HttpServlet
 {
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException
 	{
 		resp.setContentType("application/json; charset=utf-8");
