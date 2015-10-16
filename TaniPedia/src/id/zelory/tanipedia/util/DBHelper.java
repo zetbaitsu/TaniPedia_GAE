@@ -60,6 +60,7 @@ public class DBHelper
 		item.setProperty("email", pakTani.getEmail());
 		item.setProperty("nama", pakTani.getNama());
 		item.setProperty("password", pakTani.getPassword());
+		item.setProperty("isMale", pakTani.isMale());
 
 		Key key = datastore.put(item);
 		if (key.equals(item.getKey()))
@@ -239,6 +240,7 @@ public class DBHelper
 			pakTani.setEmail(item.getProperty("email").toString());
 			pakTani.setNama(item.getProperty("nama").toString());
 			pakTani.setPassword(item.getProperty("password").toString());
+			pakTani.setMale((boolean) item.getProperty("isMale"));
 		} catch (Exception e)
 		{
 
@@ -252,6 +254,31 @@ public class DBHelper
 		ArrayList<Soal> soal = new ArrayList<Soal>();
 		Query query = new Query("Soal").addSort("tanggal",
 				Query.SortDirection.DESCENDING);
+		List<Entity> items = datastore.prepare(query).asList(
+				FetchOptions.Builder.withLimit(jumlah));
+
+		for (Entity item : items)
+		{
+			Soal s = new Soal();
+			s.setId((Key) item.getProperty("id"));
+			s.setEmail(item.getProperty("email").toString());
+			s.setTanggal((Date) item.getProperty("tanggal"));
+			s.setIsi(item.getProperty("isi").toString());
+
+			soal.add(s);
+		}
+
+		return soal;
+	}
+	
+	public static ArrayList<Soal> ambilSoal(String email, int jumlah)
+	{
+		ArrayList<Soal> soal = new ArrayList<Soal>();
+		Query query = new Query("Soal").addSort("tanggal",
+				Query.SortDirection.DESCENDING);
+		Filter filter = new Query.FilterPredicate("email",
+				FilterOperator.EQUAL, email);
+		query.setFilter(filter);
 		List<Entity> items = datastore.prepare(query).asList(
 				FetchOptions.Builder.withLimit(jumlah));
 

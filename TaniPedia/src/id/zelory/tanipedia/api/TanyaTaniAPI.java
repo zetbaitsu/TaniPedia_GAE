@@ -34,14 +34,24 @@ public class TanyaTaniAPI
 			resp.setContentType("application/json; charset=utf-8");
 			ObjectMapper mapper = new ObjectMapper();
 			mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
-			ArrayList<Soal> soal = DBHelper.ambilSoal(30);
+			String email = req.getParameter("email");
+
+			ArrayList<Soal> soal;
+			if (email == null)
+			{
+				soal = DBHelper.ambilSoal(30);
+			} else
+			{
+				soal = DBHelper.ambilSoal(email, 30);
+			}
+			
 			ArrayList<SoalTampil> soalList = new ArrayList<SoalTampil>();
 
 			for (Soal s : soal)
 			{
 				SoalTampil st = new SoalTampil();
 				st.setId(s.getId().getName());
-				st.setNama(DBHelper.ambilPakTani(s.getEmail()).getNama());
+				st.setPakTani(DBHelper.ambilPakTani(s.getEmail()));
 				st.setIsi(s.getIsi());
 				st.setTanggal(StringUtils.ubahTanggal(s.getTanggal().toString()
 						.substring(0, 10)));
@@ -98,13 +108,13 @@ public class TanyaTaniAPI
 			{
 				JawabanTampil jt = new JawabanTampil();
 				jt.setIdSoal(j.getIdSoal().getName());
-				jt.setNama(DBHelper.ambilPakTani(j.getEmail()).getNama());
+				jt.setPakTani(DBHelper.ambilPakTani(j.getEmail()));
 				jt.setIsi(j.getIsi());
 				jt.setTanggal(StringUtils.ubahTanggal(j.getTanggal().toString()
 						.substring(0, 10)));
 				jawabanList.add(jt);
 			}
-			
+
 			String JSON = mapper.writeValueAsString(jawabanList);
 
 			resp.getWriter().println(JSON);

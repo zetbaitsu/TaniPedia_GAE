@@ -4,9 +4,9 @@ package id.zelory.tanipedia.model;
 public class SoalTampil
 {
 	private String id;
-	private String nama;
 	private String tanggal;
 	private String isi;
+	private PakTani pakTani;
 	
 	public String getId()
 	{
@@ -15,14 +15,6 @@ public class SoalTampil
 	public void setId(String id)
 	{
 		this.id = id;
-	}
-	public String getNama()
-	{
-		return nama;
-	}
-	public void setNama(String nama)
-	{
-		this.nama = nama;
 	}
 	public String getTanggal()
 	{
@@ -39,5 +31,13 @@ public class SoalTampil
 	public void setIsi(String isi)
 	{
 		this.isi = isi;
+	}
+	public PakTani getPakTani()
+	{
+		return pakTani;
+	}
+	public void setPakTani(PakTani pakTani)
+	{
+		this.pakTani = pakTani;
 	}
 }
