@@ -1,12 +1,4 @@
-<!-- Indices written at Tue, 20 Oct 2015 20:20:59 WIB -->
+<!-- Indices written at Tue, 20 Oct 2015 21:13:47 WIB -->
 
-<datastore-indexes>
+<datastore-indexes/>
 
-	<!-- Used 1 time in query history -->
-	<datastore-index kind="Notifikasi" ancestor="false"
-		source="manual">
-		<property name="emailPenanya" direction="asc" />
-		<property name="tanggal" direction="desc" />
-	</datastore-index>
-
-</datastore-indexes>
