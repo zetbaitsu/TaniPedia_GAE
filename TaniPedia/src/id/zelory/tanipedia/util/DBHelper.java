@@ -3,6 +3,7 @@ package id.zelory.tanipedia.util;
 import id.zelory.tanipedia.model.Berita;
 import id.zelory.tanipedia.model.Jawaban;
 import id.zelory.tanipedia.model.Komoditas;
+import id.zelory.tanipedia.model.Notifikasi;
 import id.zelory.tanipedia.model.PakTani;
 import id.zelory.tanipedia.model.Soal;
 
@@ -68,7 +69,7 @@ public class DBHelper
 		else
 			return false;
 	}
-	
+
 	public static void simpan(Komoditas komoditas)
 	{
 		Entity item = new Entity("Komoditas", komoditas.getNama());
@@ -101,6 +102,23 @@ public class DBHelper
 		item.setProperty("email", jawaban.getEmail());
 		item.setProperty("tanggal", jawaban.getTanggal());
 		item.setProperty("isi", jawaban.getIsi());
+
+		Key key = datastore.put(item);
+		if (key.equals(item.getKey()))
+			return true;
+		else
+			return false;
+	}
+
+	public static boolean simpan(Notifikasi notifikasi)
+	{
+		Entity item = new Entity("Notifikasi", notifikasi.getId());
+		item.setProperty("id", notifikasi.getId());
+		item.setProperty("idSoal", notifikasi.getIdSoal());
+		item.setProperty("email", notifikasi.getEmail());
+		item.setProperty("emailPenanya", notifikasi.getEmailPenanya());
+		item.setProperty("tanggal", notifikasi.getTanggal());
+		item.setProperty("isi", notifikasi.getIsi());
 
 		Key key = datastore.put(item);
 		if (key.equals(item.getKey()))
@@ -270,7 +288,7 @@ public class DBHelper
 
 		return soal;
 	}
-	
+
 	public static ArrayList<Soal> ambilSoal(String email, int jumlah)
 	{
 		ArrayList<Soal> soal = new ArrayList<Soal>();
@@ -321,11 +339,65 @@ public class DBHelper
 		return jawaban;
 	}
 	
+	public static Soal ambilSoal(Key idSoal)
+	{
+		Query query = new Query("Soal");
+		Filter filter = new Query.FilterPredicate("id",
+				FilterOperator.EQUAL, idSoal);
+		query.setFilter(filter);
+		PreparedQuery pq = datastore.prepare(query);
+		Entity item = pq.asSingleEntity();
+
+		Soal soal = new Soal();
+
+		try
+		{
+			soal.setEmail(item.getProperty("email").toString());
+			soal.setId(idSoal);
+			soal.setIsi(item.getProperty("isi").toString());
+			soal.setTanggal((Date) item.getProperty("tanggal"));
+		} catch (Exception e)
+		{
+
+		}
+
+		return soal;
+	}
+
+	public static ArrayList<Notifikasi> ambilNotifikasi(String emailPenanya,
+			int jumlah)
+	{
+		ArrayList<Notifikasi> notifikasi = new ArrayList<Notifikasi>();
+		Query query = new Query("Notifikasi").addSort("tanggal",
+				Query.SortDirection.DESCENDING);
+		Filter filter = new Query.FilterPredicate("emailPenanya",
+				FilterOperator.EQUAL, emailPenanya);
+		query.setFilter(filter);
+		List<Entity> items = datastore.prepare(query).asList(
+				FetchOptions.Builder.withLimit(jumlah));
+
+		for (Entity item : items)
+		{
+			Notifikasi n = new Notifikasi();
+			n.setIdSoal((Key) item.getProperty("idSoal"));
+			n.setEmail(item.getProperty("email").toString());
+			n.setEmailPenanya(item.getProperty("emailPenanya").toString());
+			n.setTanggal((Date) item.getProperty("tanggal"));
+			n.setIsi(item.getProperty("isi").toString());
+			n.setId((Key) item.getProperty("id"));
+
+			notifikasi.add(n);
+		}
+
+		return notifikasi;
+	}
+
 	public static ArrayList<Komoditas> ambilKomoditas()
 	{
 		ArrayList<Komoditas> komoditas = new ArrayList<Komoditas>();
 		Query query = new Query("Komoditas");
-		List<Entity> items = datastore.prepare(query).asList(FetchOptions.Builder.withDefaults());
+		List<Entity> items = datastore.prepare(query).asList(
+				FetchOptions.Builder.withDefaults());
 
 		for (Entity item : items)
 		{

@@ -2,6 +2,7 @@ package id.zelory.tanipedia.api;
 
 import id.zelory.tanipedia.model.Jawaban;
 import id.zelory.tanipedia.model.JawabanTampil;
+import id.zelory.tanipedia.model.Notifikasi;
 import id.zelory.tanipedia.model.Soal;
 import id.zelory.tanipedia.model.SoalTampil;
 import id.zelory.tanipedia.util.DBHelper;
@@ -44,7 +45,7 @@ public class TanyaTaniAPI
 			{
 				soal = DBHelper.ambilSoal(email, 30);
 			}
-			
+
 			ArrayList<SoalTampil> soalList = new ArrayList<SoalTampil>();
 
 			for (Soal s : soal)
@@ -142,6 +143,18 @@ public class TanyaTaniAPI
 			jawaban.setIsi(isi);
 
 			DBHelper.simpan(jawaban);
+
+			Notifikasi notifikasi = new Notifikasi();
+			notifikasi.setIdSoal(id);
+			notifikasi.setEmail(email);
+			notifikasi.setEmailPenanya(DBHelper.ambilSoal(id).getEmail());
+			notifikasi.setTanggal(now);
+			notifikasi.setIsi(isi);
+			Key idNotif = KeyFactory.createKey("Notifikasi", idSoal + email
+					+ notifikasi.getTanggal().toString());
+			notifikasi.setId(idNotif);
+
+			DBHelper.simpan(notifikasi);
 
 			resp.getWriter().println("{\"status\": \"Berhasil\"}");
 		}

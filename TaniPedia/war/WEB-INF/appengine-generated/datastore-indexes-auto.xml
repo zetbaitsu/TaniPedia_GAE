@@ -1,17 +1,11 @@
-<!-- Indices written at Fri, 16 Oct 2015 17:25:44 WIB -->
+<!-- Indices written at Tue, 20 Oct 2015 20:20:59 WIB -->
 
 <datastore-indexes>
 
 	<!-- Used 1 time in query history -->
-	<datastore-index kind="Jawaban" ancestor="false"
-		source="auto">
-		<property name="idSoal" direction="asc" />
-		<property name="tanggal" direction="asc" />
-	</datastore-index>
-
-	<!-- Used 1 time in query history -->
-	<datastore-index kind="Soal" ancestor="false" source="manual">
-		<property name="email" direction="asc" />
+	<datastore-index kind="Notifikasi" ancestor="false"
+		source="manual">
+		<property name="emailPenanya" direction="asc" />
 		<property name="tanggal" direction="desc" />
 	</datastore-index>
 

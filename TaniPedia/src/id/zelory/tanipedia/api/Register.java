@@ -22,7 +22,7 @@ public class Register extends HttpServlet
 		String email = req.getParameter("email");
 		String nama = req.getParameter("nama");
 		String password = req.getParameter("pass");
-		boolean isMale = req.getParameter("isMale").equals("1");
+		boolean isMale = req.getParameter("male").equals("true");
 
 		PakTani pakTani = new PakTani();
 		pakTani.setEmail(email);
