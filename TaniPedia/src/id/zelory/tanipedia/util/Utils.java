@@ -22,12 +22,12 @@ public class Utils
 		cal.add(Calendar.DATE, -1);
 		return dateFormat.format(cal.getTime());
 	}
-	
+
 	public static Date getTodayDate()
 	{
 		DateFormat dateFormat = new SimpleDateFormat("hh:mm:ss, d M yyyy");
 		Calendar cal = Calendar.getInstance();
-		
+
 		try
 		{
 			return dateFormat.parse(dateFormat.format(cal.getTime()));
@@ -35,7 +35,36 @@ public class Utils
 		{
 			e.printStackTrace();
 		}
-		
+
 		return null;
+	}
+
+	public static String getArahAngin(double degree)
+	{
+		if ((degree < 22.5 && degree >= 0) || (degree < 360 && degree >= 337.5))
+		{
+			return "Utara";
+		} else if (degree < 67.5)
+		{
+			return "Timur Laut";
+		} else if (degree < 112.5)
+		{
+			return "Timur";
+		} else if (degree < 157.5)
+		{
+			return "Tenggara";
+		} else if (degree < 202.5)
+		{
+			return "Selatan";
+		} else if (degree < 247.5)
+		{
+			return "Barat Daya";
+		} else if (degree < 292.5)
+		{
+			return "Barat";
+		} else
+		{
+			return "Barat Laut";
+		}
 	}
 }

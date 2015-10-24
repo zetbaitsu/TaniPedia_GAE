@@ -2,6 +2,7 @@ package id.zelory.tanipedia.api;
 
 import id.zelory.tanipedia.model.Cuaca;
 import id.zelory.tanipedia.util.StringUtils;
+import id.zelory.tanipedia.util.Utils;
 
 import java.io.IOException;
 import java.net.URL;
@@ -59,7 +60,10 @@ public class CuacaAPI extends HttpServlet
 			cuaca.setSuhu(item.findValue("temp").findValue("day").asText());
 			cuaca.setCuaca(item.findValue("weather").get(0).findValue("main")
 					.asText());
-
+			cuaca.setTekanan(item.findValue("pressure").asText() + " hpa");
+			cuaca.setKelembaban(item.findValue("humidity").asText() +"%");
+			cuaca.setKecepatanAngin(item.findValue("speed").asText() + " m/s");
+			cuaca.setArahAngin(Utils.getArahAngin(item.findValue("deg").asDouble()));
 			cuacas.add(cuaca);
 		}
 		mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);

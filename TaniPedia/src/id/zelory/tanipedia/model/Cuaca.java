@@ -13,6 +13,10 @@ public class Cuaca
 	private String tanggal;
 	private String cuaca;
 	private String kegiatan;
+	private String tekanan;
+	private String kelembaban;
+	private String kecepatanAngin;
+	private String arahAngin;
 
 	public String getLokasi()
 	{
@@ -53,7 +57,7 @@ public class Cuaca
 	{
 		this.suhu = suhu;
 	}
-	
+
 	public String getTanggal()
 	{
 		return tanggal;
@@ -79,4 +83,51 @@ public class Cuaca
 	{
 		return kegiatan;
 	}
+
+	public String getTekanan()
+	{
+		return tekanan;
+	}
+
+	public void setTekanan(String tekanan)
+	{
+		this.tekanan = tekanan;
+	}
+
+	public String getKelembaban()
+	{
+		return kelembaban;
+	}
+
+	public void setKelembaban(String kelembaban)
+	{
+		this.kelembaban = kelembaban;
+	}
+
+	public String getKecepatanAngin()
+	{
+		return kecepatanAngin;
+	}
+
+	public void setKecepatanAngin(String kecepatanAngin)
+	{
+		this.kecepatanAngin = kecepatanAngin;
+	}
+
+	public String getArahAngin()
+	{
+		return arahAngin;
+	}
+
+	public void setArahAngin(String arahAngin)
+	{
+		this.arahAngin = arahAngin;
+	}
+
+	public void setKegiatan(String kegiatan)
+	{
+		this.kegiatan = kegiatan;
+	}
+	
+	
 }
