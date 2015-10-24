@@ -4,7 +4,7 @@ import id.zelory.tanipedia.util.StringUtils;
 
 public class Cuaca
 {
-	public static final String API = "http://api.openweathermap.org/data/2.5/forecast/daily?cnt=7&mode=json&units=metric&APPID=2a266635e0fb451a9f3171341233a2ef";
+	public static final String API = "http://api.openweathermap.org/data/2.5/forecast/daily?cnt=16&mode=json&units=metric&APPID=2a266635e0fb451a9f3171341233a2ef";
 
 	private String lokasi;
 	private String suhuMax;
