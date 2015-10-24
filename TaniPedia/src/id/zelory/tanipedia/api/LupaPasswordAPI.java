@@ -2,6 +2,7 @@ package id.zelory.tanipedia.api;
 
 import id.zelory.tanipedia.model.PakTani;
 import id.zelory.tanipedia.util.DBHelper;
+import id.zelory.tanipedia.util.RandomString;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -29,6 +30,9 @@ public class LupaPasswordAPI extends HttpServlet
 		String email = req.getParameter("email");
 
 		PakTani pakTani = DBHelper.ambilPakTani(email);
+		RandomString randomString = new RandomString(6);
+		pakTani.setPassword(randomString.nextString());
+		DBHelper.simpan(pakTani);
 		if (pakTani.getNama() == null)
 		{
 			resp.getWriter().println("{\"status\": \"Akun tidak ditemukan\"}");
@@ -40,11 +44,11 @@ public class LupaPasswordAPI extends HttpServlet
 			String msgBody = "Halo "
 					+ pakTani.getNama()
 					+ "\n\n"
-					+ "Anda baru saja mengirimkan permintaan bahwa anda lupa password akun TaniPedia milik anda. Berikut ini adalah password akun TaniPedia anda :\n"
-					+ "\nPassword : "
+					+ "Anda baru saja mengirimkan permintaan bahwa anda lupa password akun TaniPedia milik anda, maka dari itu kami telah mengatur ulang password anda dengan teks berikut :\n"
+					+ "\nPassword baru anda : "
 					+ pakTani.getPassword()
 					+ "\n\n"
-					+ "Silahkan masukan kembali password diatas pada halaman login TaniPedia. Terimakasih.\n\n"
+					+ "Silahkan masukan kembali password diatas pada halaman login TaniPedia, kemudian ubah password tersebut pada halaman edit profil demi keamanan akun anda. Terimakasih.\n\n"
 					+ "Salam\n\nAdmin TaniPedia.";
 			System.out.println(msgBody);
 

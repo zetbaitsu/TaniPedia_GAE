@@ -2,6 +2,7 @@ package id.zelory.tanipedia.api;
 
 import id.zelory.tanipedia.model.Notifikasi;
 import id.zelory.tanipedia.model.NotifikasiTampil;
+import id.zelory.tanipedia.model.SoalTampil;
 import id.zelory.tanipedia.util.DBHelper;
 import id.zelory.tanipedia.util.StringUtils;
 
@@ -27,19 +28,23 @@ public class NotifikasiAPI extends HttpServlet
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.setPropertyNamingStrategy(PropertyNamingStrategy.CAMEL_CASE_TO_LOWER_CASE_WITH_UNDERSCORES);
 		String emailPenanya = req.getParameter("emailPenanya");
-		ArrayList<Notifikasi> notifikasi = DBHelper.ambilNotifikasi(emailPenanya, 30);
+		ArrayList<Notifikasi> notifikasi = DBHelper.ambilNotifikasi(
+				emailPenanya, 30);
 		ArrayList<NotifikasiTampil> notifikasiList = new ArrayList<NotifikasiTampil>();
 		System.out.println(emailPenanya);
 		for (Notifikasi n : notifikasi)
 		{
-			NotifikasiTampil nt = new NotifikasiTampil();
-			nt.setId(n.getId().getName());
-			nt.setIdSoal(n.getIdSoal().getName());
-			nt.setPakTani(DBHelper.ambilPakTani(n.getEmail()));
-			nt.setIsi(n.getIsi());
-			nt.setTanggal(StringUtils.ubahTanggal(n.getTanggal().toString()
-					.substring(0, 10)));
-			notifikasiList.add(nt);
+			if (!n.getEmail().equals(emailPenanya))
+			{
+				NotifikasiTampil nt = new NotifikasiTampil();
+				nt.setId(n.getId().getName());
+				nt.setSoal(new SoalTampil(DBHelper.ambilSoal(n.getIdSoal())));
+				nt.setPakTani(DBHelper.ambilPakTani(n.getEmail()));
+				nt.setIsi(n.getIsi());
+				nt.setTanggal(StringUtils.ubahTanggal(n.getTanggal().toString()
+						.substring(0, 10)));
+				notifikasiList.add(nt);
+			}
 		}
 
 		String JSON = mapper.writeValueAsString(notifikasiList);

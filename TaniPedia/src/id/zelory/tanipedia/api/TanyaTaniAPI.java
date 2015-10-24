@@ -144,17 +144,21 @@ public class TanyaTaniAPI
 
 			DBHelper.simpan(jawaban);
 
-			Notifikasi notifikasi = new Notifikasi();
-			notifikasi.setIdSoal(id);
-			notifikasi.setEmail(email);
-			notifikasi.setEmailPenanya(DBHelper.ambilSoal(id).getEmail());
-			notifikasi.setTanggal(now);
-			notifikasi.setIsi(isi);
-			Key idNotif = KeyFactory.createKey("Notifikasi", idSoal + email
-					+ notifikasi.getTanggal().toString());
-			notifikasi.setId(idNotif);
+			String emailPenanya = DBHelper.ambilSoal(id).getEmail();
+			if (!email.equals(emailPenanya))
+			{
+				Notifikasi notifikasi = new Notifikasi();
+				notifikasi.setIdSoal(id);
+				notifikasi.setEmail(email);
+				notifikasi.setEmailPenanya(emailPenanya);
+				notifikasi.setTanggal(now);
+				notifikasi.setIsi(isi);
+				Key idNotif = KeyFactory.createKey("Notifikasi", idSoal + email
+						+ notifikasi.getTanggal().toString());
+				notifikasi.setId(idNotif);
 
-			DBHelper.simpan(notifikasi);
+				DBHelper.simpan(notifikasi);
+			}
 
 			resp.getWriter().println("{\"status\": \"Berhasil\"}");
 		}

@@ -3,7 +3,7 @@ package id.zelory.tanipedia.model;
 public class NotifikasiTampil
 {
 	private String id;
-	private String idSoal;
+	private SoalTampil soal;
 	private String tanggal;
 	private String isi;
 	private PakTani pakTani;
@@ -18,14 +18,14 @@ public class NotifikasiTampil
 		this.id = id;
 	}
 
-	public String getIdSoal()
+	public SoalTampil getSoal()
 	{
-		return idSoal;
+		return soal;
 	}
 
-	public void setIdSoal(String idSoal)
+	public void setSoal(SoalTampil soal)
 	{
-		this.idSoal = idSoal;
+		this.soal = soal;
 	}
 
 	public String getTanggal()
