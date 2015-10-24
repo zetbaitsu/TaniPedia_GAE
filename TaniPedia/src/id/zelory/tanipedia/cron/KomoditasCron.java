@@ -2,6 +2,7 @@ package id.zelory.tanipedia.cron;
 
 import id.zelory.tanipedia.model.Komoditas;
 import id.zelory.tanipedia.util.DBHelper;
+import id.zelory.tanipedia.util.Utils;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -41,6 +42,7 @@ public class KomoditasCron extends HttpServlet
 		
 		String JSON = mapper.writeValueAsString(komoditas);
 		resp.getWriter().println(JSON);
+		System.out.println(Utils.getYesterdayDateString());
 	}
 
 	private List<Komoditas> getBeras()
@@ -51,7 +53,7 @@ public class KomoditasCron extends HttpServlet
 
 		try
 		{
-			root = mapper.readTree(new URL(Komoditas.API_BERAS));
+			root = mapper.readTree(new URL(Komoditas.getApiBeras()));
 		} catch (JsonProcessingException e)
 		{
 			// TODO Auto-generated catch block
@@ -117,7 +119,7 @@ public class KomoditasCron extends HttpServlet
 
 		try
 		{
-			root = mapper.readTree(new URL(Komoditas.API_PALAWIJA));
+			root = mapper.readTree(new URL(Komoditas.getApiPalawija()));
 		} catch (JsonProcessingException e)
 		{
 			// TODO Auto-generated catch block
@@ -231,7 +233,7 @@ public class KomoditasCron extends HttpServlet
 
 		try
 		{
-			root = mapper.readTree(new URL(Komoditas.API_SAYURAN));
+			root = mapper.readTree(new URL(Komoditas.getApiSayuran()));
 		} catch (JsonProcessingException e)
 		{
 			// TODO Auto-generated catch block
@@ -337,7 +339,7 @@ public class KomoditasCron extends HttpServlet
 
 		try
 		{
-			root = mapper.readTree(new URL(Komoditas.API_BUAH));
+			root = mapper.readTree(new URL(Komoditas.getApiBuah()));
 		} catch (JsonProcessingException e)
 		{
 			// TODO Auto-generated catch block

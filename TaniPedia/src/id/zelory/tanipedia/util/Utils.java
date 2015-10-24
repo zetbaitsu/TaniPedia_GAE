@@ -17,7 +17,7 @@ public class Utils
 
 	public static String getYesterdayDateString()
 	{
-		DateFormat dateFormat = new SimpleDateFormat("d M yyyy");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Calendar cal = Calendar.getInstance();
 		cal.add(Calendar.DATE, -1);
 		return dateFormat.format(cal.getTime());
