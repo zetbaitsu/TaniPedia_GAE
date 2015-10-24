@@ -60,9 +60,9 @@ public class CuacaAPI extends HttpServlet
 			cuaca.setSuhu(item.findValue("temp").findValue("day").asText());
 			cuaca.setCuaca(item.findValue("weather").get(0).findValue("main")
 					.asText());
-			cuaca.setTekanan(item.findValue("pressure").asText() + " hpa");
-			cuaca.setKelembaban(item.findValue("humidity").asText() +"%");
-			cuaca.setKecepatanAngin(item.findValue("speed").asText() + " m/s");
+			cuaca.setTekanan(item.findValue("pressure").asText());
+			cuaca.setKelembaban(item.findValue("humidity").asText());
+			cuaca.setKecepatanAngin(item.findValue("speed").asText());
 			cuaca.setArahAngin(Utils.getArahAngin(item.findValue("deg").asDouble()));
 			cuacas.add(cuaca);
 		}
